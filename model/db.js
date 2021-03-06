@@ -6,6 +6,6 @@ const adapter = new FileSync("./model/contacts.json");
 const db = low(adapter);
 
 // Set some defaults (required if your JSON file is empty)
-db.defaults({ contacts: [] }).write();
+// db.defaults({ contacts: [] }).write();
 
 module.exports = db;

@@ -4,27 +4,24 @@ const path = require("path");
 const db = require("./db");
 const { v4: uuidv4 } = require("uuid");
 
-const contactsPath = path.join(__dirname, "../model/contacts.json");
+const contactsPath = path.join(__dirname, "./contacts.json");
 // const contactsList = fs.readFile(contactsPath, "utf8");
 // console.log(contacts);
 
 console.log(db);
 
-const listContacts = async () => {
-  try {
-    const data = await fs.readFile(contactsPath, "utf8");
-    return JSON.parse(data);
-  } catch (error) {
-    throw error;
-  }
-};
-
 // const listContacts = async () => {
-//   const contactsList = fs.readFile(contactsPath, "utf8");
-//   return contactsList;
-//   // return JSON.parse(await fs.readFile(contactsPath, "utf8"));
-//   // return await db.value();
+//   try {
+//     const data = await fs.readFile(contactsPath, "utf8");
+//     return JSON.parse(data);
+//   } catch (error) {
+//     throw error;
+//   }
 // };
+
+const listContacts = async () => {
+  return await db.value();
+};
 
 const getContactById = async (contactId) => {
   return db.get("contacts").find({ contactId }).value();

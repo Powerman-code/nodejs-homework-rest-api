@@ -38,13 +38,9 @@ const listContacts = async () => {
 // lowdb method getContactById =>
 
 const getContactById = async (contactId) => {
-  try {
-    const normalizedId = normalizeId(contactId);
-    const contactToFind = await db.find({ id: normalizedId }).value();
-    return contactToFind;
-  } catch (error) {
-    throw error;
-  }
+  const normalizedId = normalizeId(contactId);
+  const contactToFind = await db.find({ id: normalizedId }).value();
+  return contactToFind;
 };
 
 const removeContact = async (contactId) => {
@@ -53,25 +49,20 @@ const removeContact = async (contactId) => {
 };
 
 const addContact = async (body) => {
-  try {
-    const allContacts = await listContacts();
-    const newContact = {
-      id: uuidv4(),
-      ...body,
-    };
+  const allContacts = await listContacts();
+  const newContact = {
+    id: uuidv4(),
+    ...body,
+  };
 
-    const updatedContactList = [...allContacts, newContact];
+  const updatedContactList = [...allContacts, newContact];
 
-    await fs.writeFile(
-      contactsPath,
-      JSON.stringify(updatedContactList, null, 2),
-      "utf-8"
-    );
-    return newContact;
-  } catch (err) {
-    console.log(err);
-    return err;
-  }
+  await fs.writeFile(
+    contactsPath,
+    JSON.stringify(updatedContactList, null, 2),
+    "utf-8"
+  );
+  return newContact;
 };
 
 // Используя addContact lowdb =>

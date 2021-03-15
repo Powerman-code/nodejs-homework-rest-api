@@ -19,7 +19,9 @@ app.use((req, res) => {
 });
 
 app.use((err, _req, res, _next) => {
-  res.status(500).json({ message: err.message || `unknown error` });
+  res
+    .status(err.status || 500)
+    .json({ message: err.message || `unknown error` });
 });
 
 module.exports = app;

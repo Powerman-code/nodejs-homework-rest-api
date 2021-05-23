@@ -2,10 +2,18 @@ const { Schema, model } = require("mongoose");
 const bcrypt = require("bcryptjs");
 const gravatar = require("gravatar");
 const { Subscription } = require("../../helpers/constants");
+const { nanoid } = require("nanoid");
 const SALT_WORK_FACTOR = 8;
 
 const userSchema = new Schema(
   {
+    name: {
+      type: String,
+      required: [true, "set name for user"],
+      unique: true,
+      default: "Guest",
+    },
+
     email: {
       type: String,
       required: [true, "set email for user"],
@@ -43,6 +51,17 @@ const userSchema = new Schema(
     idCloudAvatar: {
       type: String,
       default: null,
+    },
+
+    verify: {
+      type: Boolean,
+      default: false,
+    },
+
+    verifyTokenEmail: {
+      type: String,
+      required: [true, "Verify token is required"],
+      default: nanoid(),
     },
 
     token: {
